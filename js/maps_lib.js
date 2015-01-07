@@ -71,9 +71,9 @@ var MapsLib = {
     else $("#search_radius").val(MapsLib.searchRadius);
     $(":checkbox").prop("checked", "checked");
     $("#result_box").hide();
-    
+
     //-----custom initializers-------
-    
+
     //-----end of custom initializers-------
 
     //run the default search
@@ -89,6 +89,14 @@ var MapsLib = {
 
     //-----custom filters-------
 
+    var type_column = "'Program Type'";  // -- note use of single & double quotes for two-word column header
+    var tempWhereClause = [];
+    if ( $("#cbType1").is(':checked')) tempWhereClause.push("OST");
+    if ( $("#cbType2").is(':checked')) tempWhereClause.push("Mentoring");
+    if ( $("#cbType3").is(':checked')) tempWhereClause.push("BHS");
+    if ( $("#cbType4").is(':checked')) tempWhereClause.push("IYS");
+    whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
+
     //-------end of custom filters--------
 
     if (address != "") {
@@ -102,7 +110,7 @@ var MapsLib = {
           $.address.parameter('address', encodeURIComponent(address));
           $.address.parameter('radius', encodeURIComponent(MapsLib.searchRadius));
           map.setCenter(MapsLib.currentPinpoint);
-          
+
           // set zoom level based on search radius
           if (MapsLib.searchRadius      >= 1610000) map.setZoom(4); // 1,000 miles
           else if (MapsLib.searchRadius >= 805000)  map.setZoom(5); // 500 miles
@@ -217,33 +225,33 @@ var MapsLib = {
   },
 
   query: function(query_opts, callback) {
-    
+
     var queryStr = [];
     queryStr.push("SELECT " + query_opts.select);
     queryStr.push(" FROM " + MapsLib.fusionTableId);
-    
+
     // where, group and order clauses are optional
     if (query_opts.where && query_opts.where != "") {
       queryStr.push(" WHERE " + query_opts.where);
     }
-    
+
     if (query_opts.groupBy && query_opts.roupBy != "") {
       queryStr.push(" GROUP BY " + query_opts.groupBy);
     }
-    
+
     if (query_opts.orderBy && query_opts.orderBy != "" ) {
       queryStr.push(" ORDER BY " + query_opts.orderBy);
     }
-    
+
     if (query_opts.offset && query_opts.offset !== "") {
       queryStr.push(" OFFSET " + query_opts.offset);
     }
-    
+
     if (query_opts.limit && query_opts.limit !== "") {
       queryStr.push(" LIMIT " + query_opts.limit);
     }
 
-    
+
 
     var sql = encodeURIComponent(queryStr.join(" "));
     $.ajax({
@@ -269,8 +277,8 @@ var MapsLib = {
 
   getCount: function(whereClause) {
     var selectColumns = "Count()";
-    MapsLib.query({ 
-      select: selectColumns, 
+    MapsLib.query({
+      select: selectColumns,
       where: whereClause
     }, function(response) {
       MapsLib.displaySearchCount(response);
@@ -314,10 +322,10 @@ var MapsLib = {
     if (text == undefined) return '';
   	return decodeURIComponent(text);
   }
-  
+
   //-----custom functions-------
   // NOTE: if you add custom functions, make sure to append each one with a comma, except for the last one.
   // This also applies to the convertToPlainString function above
-  
+
   //-----end of custom functions-------
 }
