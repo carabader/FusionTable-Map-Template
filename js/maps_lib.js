@@ -21,7 +21,7 @@ var MapsLib = {
 
   //the encrypted Table ID of your Fusion Table (found under File => About)
   //NOTE: numeric IDs will be deprecated soon
-  fusionTableId:      "1eweTNzUMCcFBj9zAw4qyqcrbH4DFe3BMvP4CYo1k",
+  fusionTableId:      "1zpnYqDyE63pQjW-6kxhzQiHqZu_qwSIaiaKmteQu",
 
   //*New Fusion Tables Requirement* API key. found at https://code.google.com/apis/console/
   //*Important* this key is for demonstration purposes. please register your own.
@@ -97,6 +97,8 @@ var MapsLib = {
     if ( $("#cbType4").is(':checked')) tempWhereClause.push("IYS");
     whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
 
+    if ( $("#select_type").val() != "")
+      whereClause += " AND 'District' = '" + $("#select_type").val() + "'";
     //-------end of custom filters--------
 
     if (address != "") {
