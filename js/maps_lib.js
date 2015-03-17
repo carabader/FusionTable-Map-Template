@@ -21,7 +21,7 @@ var MapsLib = {
 
   //the encrypted Table ID of your Fusion Table (found under File => About)
   //NOTE: numeric IDs will be deprecated soon
-  fusionTableId:      "1zpnYqDyE63pQjW-6kxhzQiHqZu_qwSIaiaKmteQu",
+  fusionTableId:      "1kQsl9L5PjzzEoKA_ZztpqyI_bkiLkm8VzemiUKeS",
 
   //*New Fusion Tables Requirement* API key. found at https://code.google.com/apis/console/
   //*Important* this key is for demonstration purposes. please register your own.
@@ -89,16 +89,17 @@ var MapsLib = {
 
     //-----custom filters-------
 
-    var type_column = "'Program Type'";  // -- note use of single & double quotes for two-word column header
+    var type_column = "'Label'";  // -- note use of single & double quotes for two-word column header
     var tempWhereClause = [];
-    if ( $("#cbType1").is(':checked')) tempWhereClause.push("OST");
-    if ( $("#cbType2").is(':checked')) tempWhereClause.push("Mentoring");
-    if ( $("#cbType3").is(':checked')) tempWhereClause.push("BHS");
-    if ( $("#cbType4").is(':checked')) tempWhereClause.push("IYS");
+    if ( $("#cbType1").is(':checked')) tempWhereClause.push("RISE");
+    if ( $("#cbType2").is(':checked')) tempWhereClause.push("Parks");
+    if ( $("#cbType3").is(':checked')) tempWhereClause.push("BHS/IYS");
+    if ( $("#cbType4").is(':checked')) tempWhereClause.push("Mentoring/Other");
+    if ( $("#cbType5").is(':checked')) tempWhereClause.push("OST");
     whereClause += " AND " + type_column + " IN ('" + tempWhereClause.join("','") + "')";
 
     if ( $("#select_type").val() != "")
-      whereClause += " AND 'District' = '" + $("#select_type").val() + "'";
+      whereClause += " AND 'Police District' = '" + $("#select_type").val() + "'";
     //-------end of custom filters--------
 
     if (address != "") {
