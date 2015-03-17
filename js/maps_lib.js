@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*!
  * Searchable Map Template with Google Fusion Tables
  * http://derekeder.com/searchable_map_template/
@@ -333,6 +334,8 @@ var MapsLib = {
   //-----end of custom functions-------
 }
 =======
+=======
+>>>>>>> FETCH_HEAD
 (function (window, undefined) {
     var MapsLib = function (options) {
         var self = this;
@@ -695,5 +698,9 @@ var MapsLib = {
         window.MapsLib = MapsLib;
     }
 
+<<<<<<< HEAD
+})(window);
+>>>>>>> FETCH_HEAD
+=======
 })(window);
 >>>>>>> FETCH_HEAD
