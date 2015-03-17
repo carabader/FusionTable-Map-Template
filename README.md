@@ -15,6 +15,14 @@ You want to put your data on a searchable, filterable map. This is a free, open 
 * RESTful URLs for sharing searches
 * ability to easily add additional search filters (checkboxes, sliders, etc)
 * all done with HTML, CSS and Javascript - no server side code required
+
+
+## Releases
+
+* [v 1.4](https://github.com/derekeder/FusionTable-Map-Template/releases/tag/v1.4) - iframe template, MapsLib class
+* [v 1.3](https://github.com/derekeder/FusionTable-Map-Template/releases/tag/v1.3) - Bootstrap 3.2, more robust query function, dynamic zoom
+* [v 1.2](https://github.com/derekeder/FusionTable-Map-Template/releases/tag/v1.2) - Bootstrap 3, jQuery 1.10.2, jQuery Address 1.6
+* [v 1.1](https://github.com/derekeder/FusionTable-Map-Template/releases/tag/v1.1) - Bootstrap 2.0.3, jQuery 1.7.1, jQuery Address 1.4 
   
 ## Dependencies
 
@@ -22,22 +30,12 @@ You want to put your data on a searchable, filterable map. This is a free, open 
 * [Google Maps API V3](https://developers.google.com/maps/documentation/javascript)
 * [jQuery](http://jquery.org)
 * [jQuery Address](https://github.com/asual/jquery-address)
-* [Bootstrap 3](http://twitter.github.com/bootstrap)
+* [Bootstrap 3.2.0](http://getbootstrap.com/)
 
 ## Community
 There's a [public Google Group](https://groups.google.com/forum/#!forum/fusion-table-map-template) for anyone who wants to or has used the Searchable Map Template. Join the growing community of map makers to learn, share and benefit from each other!
 
 [Join the Fusion Table Map Template Google Group &raquo;](https://groups.google.com/forum/#!forum/fusion-table-map-template)
-
-## Releases
-
-We've upgraded to [Bootstrap 3](http://getbootstrap.com/)! The HTML markup is slightly different in this version, so if you still want to use [Bootstrap 2](http://getbootstrap.com/2.3.2/), you can grab that version too. 
-
-If you're upgrading, check out the [Bootstrap migration guide](http://getbootstrap.com/getting-started/#migration).
-
-* [v 1.3](https://github.com/derekeder/FusionTable-Map-Template/releases/tag/v1.3) - Bootstrap 3.2, more robust query function, dynamic zoom
-* [v 1.2](https://github.com/derekeder/FusionTable-Map-Template/releases/tag/v1.2) - Bootstrap 3, jQuery 1.10.2, jQuery Address 1.6
-* [v 1.1](https://github.com/derekeder/FusionTable-Map-Template/releases/tag/v1.1) - Bootstrap 2.0.3, jQuery 1.7.1, jQuery Address 1.4 
 
 ## Setup
 
@@ -55,12 +53,12 @@ Follow the steps below and you'll be in business with your own map.
    4. Select __Browser key__
    5. Leave the ACCEPT REQUESTS FROM THESE HTTP REFERERS __blank__ and click __Create__
    6. Copy the API KEY, which should look something like `AIzaSyA3FQFrNr5W2OEVmuENqhb2MBB2JabdaOY`
-1. In js/maps_lib.js, set your 
+1. At the bottom of index.html, set your 
    1. __fusionTableId__ to the encrypted ID of your Fusion Table. __Note__: Google is phasing out numeric IDs soon
    1. __googleApiKey__ to the API key from your [Google API Console](https://code.google.com/apis/console/)
    1. __locationColumn__ to the name of your location column in your Fusion Table
-   1. __map_centroid__ to the lat/long you want your map to center on
-   1. __locationScope__ to the area you want to limit searches to (set to 'Chicago' by default)
+   1. __map_center__ to the lat/long you want your map to center on
+   1. __locationScope__ to the area you want to limit searches to (set to 'chicago' by default)
    1. __recordName__ and __recordNamePlural__ to the name of the items in your Fusion Table
 1. Add/modify additional filters to maps_lib.js. This will depend on the data you are trying to map. Take a look at the [wiki](https://github.com/derekeder/FusionTable-Map-Template/wiki) for [filter examples](https://github.com/derekeder/FusionTable-Map-Template/wiki/Filter-examples) and [list views](https://github.com/derekeder/FusionTable-Map-Template/wiki/List-search-results) to get started. You can also take a look at these examples:
    * [Connect Chicago Locator](http://locations.weconnectchicago.org)
@@ -68,6 +66,34 @@ Follow the steps below and you'll be in business with your own map.
    * [Chicago Bike Crash Reports](http://derekeder.com/maps/chicago-bike-crash-reports/index.html)
    * [Chicago TIF Projects](http://derekeder.com/maps/chicago-tif/index.html)
 1. Upload this map and all the supporting files (css, fonts, images and js folders) to your site 
+
+## MapsLib options
+
+You can configure your map by passing in a dictionary of options when you create a new `MapsLib` instance in `index.html` or `index_iframe.html`. Here's an example:
+
+```javascript
+var myMap = new MapsLib({
+  fusionTableId:      "1m4Ez9xyTGfY2CU6O-UgEcPzlS0rnzLU93e4Faa0",
+  googleApiKey:       "AIzaSyA3FQFrNr5W2OEVmuENqhb2MBB2JabdaOY",
+  locationColumn:     "geometry",
+  map_center:         [41.8781136, -87.66677856445312],
+  locationScope:      "chicago"
+});
+```
+
+| Option           | Default value           | Notes                                                                                                                                                         |
+|------------------|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| fusionTableId    |                         | **Required**. Table ID of your Fusion Table (found under File => About).                                                                                      |
+| googleApiKey     |                         | **Required**. Found at https://console.developers.google.com/ The key provided in this template is for demonstration purposes only. Please register your own. |
+| map_centroid     |                         | **Required**. Center [latitude, longitude] that your map defaults to.                                                                                         |
+| recordName       | record                  | Used for showing the count of results.                                                                                                                        |
+| recordNamePlural | records                 |                                                                                                                                                               |
+| searchRadius     | 805                     | Default search radius. Defined in meters. Default is 1/2 mile.                                                                                                |
+| locationColumn   | geometry                | Name of the location column in your Fusion Table. If your location column name has spaces in it, surround it with single quotes like this "'my location'".    |
+| locationScope    | chicago                 | Appended to all address searches to keep results within a geographic area.                                                                                    |
+| defaultZoom      | 11                      | Default zoom level when map is loaded (bigger is more zoomed in).                                                                                             |
+| addrMarkerImage  | images/blue-pushpin.png | Image used to identify your address search on the map. Setting it to blank will hide the marker.                                                              |
+
 
 ## Custom Filters and Views
 
@@ -120,6 +146,7 @@ Fusion Tables
 
 Community
 
+* [Fusion Table Map Template Google Group](https://groups.google.com/forum/#!forum/fusion-table-map-template)
 * [Fusion Tables Issue Tracker](http://code.google.com/p/fusion-tables/issues/list)
 * [Fusion Tables Google Group](http://groups.google.com/group/fusion-tables-users-group)
 
@@ -203,11 +230,11 @@ Notice a bug or want to add a feature? [Open an issue](https://github.com/dereke
 * [Derek Eder](http://derekeder.com) - primary contributor
 * [Chris Keller](http://www.chrislkeller.com/) - [recenter map on resize](https://github.com/derekeder/FusionTable-Map-Template/pull/11)
 * [nb-ofs](https://github.com/nb-ofs) - [Windows 8 touch screen ability](https://github.com/derekeder/FusionTable-Map-Template/pull/14), [Google Maps Visual Refresh](https://github.com/derekeder/FusionTable-Map-Template/pull/18), [Noscript message](https://github.com/derekeder/FusionTable-Map-Template/pull/19)
-* [Felipe Figueroa](https://github.com/amenadiel) - [Geocomplete update](https://github.com/derekeder/FusionTable-Map-Template/pull/36), [Updates to query function](https://github.com/derekeder/FusionTable-Map-Template/pull/38)
+* [Felipe Figueroa](https://github.com/amenadiel) - [Geocomplete update](https://github.com/derekeder/FusionTable-Map-Template/pull/36), [Updates to query function](https://github.com/derekeder/FusionTable-Map-Template/pull/38), [maps_lib.js javascript class](https://github.com/derekeder/FusionTable-Map-Template/pull/45)
 
 ## Copyright and attribution
 
-Copyright (c) 2014 Derek Eder. Released under the MIT License.
+Copyright (c) 2015 Derek Eder. Released under the MIT License.
 
 If you use this template, please provide the following attribution in the footer: 
 
